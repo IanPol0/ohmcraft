@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Resistencias Premium</title>
+    <meta name="description" content="Calculadora de código de colores de resistencias interactiva, valor a bandas, y circuitos serie/paralelo. Herramienta premium para electrónica.">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="glow-bg"></div>
+    <div class="app-container">
+        <!-- Header -->
+        <header>
+            <div class="logo-container">
+                <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M3 12h3l2-5 4 10 3-7 2 4h4" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <h1>OhmCraft</h1>
+            </div>
+            <p class="subtitle">Calculadora de Resistencias de Precisión</p>
+        </header>
+
+        <!-- Navigation Tabs -->
+        <nav class="tabs" role="tablist">
+            <button class="tab-btn active" id="tab-btn-colors" role="tab" aria-selected="true" aria-controls="panel-colors">
+                <svg viewBox="0 0 24 24" class="tab-icon"><path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="currentColor" stroke-width="2"/><path d="M12 18A6 6 0 1 0 12 6A6 6 0 0 0 12 18Z" fill="currentColor"/></svg>
+                Bandas a Valor
+            </button>
+            <button class="tab-btn" id="tab-btn-values" role="tab" aria-selected="false" aria-controls="panel-values">
+                <svg viewBox="0 0 24 24" class="tab-icon"><path d="M17 3H7C4.79086 3 3 4.79086 3 7V17C3 19.2091 4.79086 21 7 21H17C19.2091 21 21 19.2091 21 17V7C21 4.79086 19.2091 3 17 3Z" stroke="currentColor" stroke-width="2"/><path d="M8 9H16M8 15H16M12 9V15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                Valor a Bandas
+            </button>
+            <button class="tab-btn" id="tab-btn-circuit" role="tab" aria-selected="false" aria-controls="panel-circuit">
+                <svg viewBox="0 0 24 24" class="tab-icon"><path d="M3 12h4m10 0h4M7 8v8m10-8v8M7 8h10M7 16h10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                Serie / Paralelo
+            </button>
+        </nav>
+
+        <!-- Main Panels Container -->
+        <main class="panel-container">
+            
+            <!-- PANEL 1: Color Bands to Value -->
+            <section id="panel-colors" class="tab-panel active" role="tabpanel">
+                <div class="panel-layout">
+                    <!-- Visualizer side -->
+                    <div class="visualizer-card">
+                        <!-- Band Mode Selector -->
+                        <div class="mode-selector">
+                            <button class="mode-btn" data-bands="4">4 Bandas</button>
+                            <button class="mode-btn active" data-bands="5">5 Bandas</button>
+                            <button class="mode-btn" data-bands="6">6 Bandas</button>
+                        </div>
+                        <!-- 2. Mid Row: Resistor Graphic (Left) + Result Display (Right) -->
+                        <div class="mid-row-layout">
+                            <!-- Resistor Interactive Graphic (Left) -->
+                            <div class="resistor-graphic-container">
+                                <svg id="resistor-svg" viewBox="0 0 400 120" width="100%" height="100%">
+                                    <defs>
+                                        <!-- Metallic lead gradient -->
+                                        <linearGradient id="lead-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                                            <stop offset="0%" stop-color="#888" />
+                                            <stop offset="50%" stop-color="#ddd" />
+                                            <stop offset="100%" stop-color="#555" />
+                                        </linearGradient>
+                                        <!-- Resistor body shadow and highlights -->
+                                        <linearGradient id="body-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                                            <stop offset="0%" stop-color="#e2cfb4" stop-opacity="0.9" />
+                                            <stop offset="25%" stop-color="#fdf4e8" stop-opacity="0.95" />
+                                            <stop offset="70%" stop-color="#d4bfa1" stop-opacity="0.9" />
+                                            <stop offset="100%" stop-color="#aa9577" stop-opacity="0.9" />
+                                        </linearGradient>
+                                        <filter id="glow-filter" x="-10%" y="-10%" width="120%" height="120%">
+                                            <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000" flood-opacity="0.3" />
+                                        </filter>
+                                    </defs>
+                                    <!-- Metal leads (left & right) -->
+                                    <rect x="10" y="56" width="380" height="8" fill="url(#lead-gradient)" rx="4" />
+                                    
+                                    <!-- Ceramic Resistor Body -->
+                                    <g filter="url(#glow-filter)">
+                                        <!-- Main cylinder -->
+                                        <rect x="70" y="25" width="260" height="70" fill="url(#body-gradient)" rx="10" />
+                                        <!-- Bulge Left -->
+                                        <path d="M 70 25 C 90 25, 90 95, 70 95 Z" fill="url(#body-gradient)" />
+                                        <!-- Bulge Right -->
+                                        <path d="M 330 25 C 310 25, 310 95, 330 95 Z" fill="url(#body-gradient)" />
+                                    </g>
+
+                                    <!-- Band Colors Overlays -->
+                                    <rect id="svg-band-1" class="resistor-band" x="95" y="25" width="16" height="70" rx="3" fill="#8B4513" />
+                                    <rect id="svg-band-2" class="resistor-band" x="135" y="25" width="16" height="70" rx="3" fill="#000000" />
+                                    <rect id="svg-band-3" class="resistor-band" x="175" y="25" width="16" height="70" rx="3" fill="#FF0000" />
+                                    <rect id="svg-band-4" class="resistor-band" x="215" y="25" width="16" height="70" rx="3" fill="#FFD700" />
+                                    <rect id="svg-band-5" class="resistor-band" x="255" y="25" width="16" height="70" rx="3" fill="#008000" />
+                                    <rect id="svg-band-6" class="resistor-band" x="295" y="25" width="16" height="70" rx="3" fill="#800080" />
+                                </svg>
+                            </div>
+
+                            <!-- Main Value Display (Right) -->
+                            <div class="result-display">
+                                <span class="result-label">Resistencia Calculada</span>
+                                <div class="result-value-container">
+                                    <h2 id="calc-resistance-value" class="calculated-value">100 k&Omega;</h2>
+                                    <span id="calc-tolerance-value" class="calculated-tolerance">&plusmn; 0.5%</span>
+                                </div>
+                                <p id="calc-temp-coef" class="calculated-temp-coef">15 ppm/K</p>
+                            </div>
+                        </div>
+
+                        <!-- 3. Bottom: Color options selectors (Full Width) -->
+                        <div class="selectors-container-compact">
+                            <h3 class="compact-section-title">Configurar Bandas de Color</h3>
+                            <div class="bands-selectors-grid" id="selectors-grid">
+                                <!-- JS will inject the interactive selectors here dynamically -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- PANEL 2: Value to Color Bands -->
+            <section id="panel-values" class="tab-panel" role="tabpanel">
+                <div class="panel-layout reverse-layout">
+                    <!-- Inputs Card -->
+                    <div class="controls-card">
+                        <h3>Ingresar Especificaciones</h3>
+                        <form id="reverse-calc-form" class="reverse-form" onsubmit="return false;">
+                            <div class="form-group">
+                                <label for="input-res-val">Valor de Resistencia</label>
+                                <div class="input-unit-group">
+                                    <input type="text" id="input-res-val" placeholder="Ej: 4.7, 220, 1M" required autocomplete="off">
+                                    <select id="select-res-unit">
+                                        <option value="1">&Omega;</option>
+                                        <option value="1000">k&Omega;</option>
+                                        <option value="1000000">M&Omega;</option>
+                                    </select>
+                                </div>
+                                <span class="input-helper">Puedes usar decimales o letras (ej. 4k7, 2M2, 100)</span>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="select-rev-bands">Número de Bandas</label>
+                                <select id="select-rev-bands">
+                                    <option value="4">4 Bandas (Estándar)</option>
+                                    <option value="5" selected>5 Bandas (Precisión)</option>
+                                    <option value="6">6 Bandas (Alta Precisión)</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="select-rev-tolerance">Tolerancia Requerida</label>
+                                <select id="select-rev-tolerance">
+                                    <option value="1" data-color="brown">&plusmn; 1% (Marrón)</option>
+                                    <option value="2" data-color="red">&plusmn; 2% (Rojo)</option>
+                                    <option value="0.5" data-color="green" selected>&plusmn; 0.5% (Verde)</option>
+                                    <option value="0.25" data-color="blue">&plusmn; 0.25% (Azul)</option>
+                                    <option value="0.1" data-color="violet">&plusmn; 0.1% (Violeta)</option>
+                                    <option value="0.05" data-color="grey">&plusmn; 0.05% (Gris)</option>
+                                    <option value="5" data-color="gold">&plusmn; 5% (Dorado)</option>
+                                    <option value="10" data-color="silver">&plusmn; 10% (Plateado)</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group" id="group-rev-tempco" style="display: none;">
+                                <label for="select-rev-tempco">Coeficiente de Temperatura</label>
+                                <select id="select-rev-tempco">
+                                    <option value="100" data-color="brown">100 ppm/K (Marrón)</option>
+                                    <option value="50" data-color="red" selected>50 ppm/K (Rojo)</option>
+                                    <option value="15" data-color="orange">15 ppm/K (Naranja)</option>
+                                    <option value="25" data-color="yellow">25 ppm/K (Amarillo)</option>
+                                    <option value="10" data-color="blue">10 ppm/K (Azul)</option>
+                                    <option value="5" data-color="violet">5 ppm/K (Violeta)</option>
+                                </select>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Graphical Display Card -->
+                    <div class="visualizer-card">
+                        <div class="resistor-graphic-container">
+                            <svg id="resistor-svg-reverse" viewBox="0 0 400 120" width="100%" height="100%">
+                                <!-- Clone of the resistor graphic, will update independently -->
+                                <rect x="10" y="56" width="380" height="8" fill="url(#lead-gradient)" rx="4" />
+                                <g filter="url(#glow-filter)">
+                                    <rect x="70" y="25" width="260" height="70" fill="url(#body-gradient)" rx="10" />
+                                    <path d="M 70 25 C 90 25, 90 95, 70 95 Z" fill="url(#body-gradient)" />
+                                    <path d="M 330 25 C 310 25, 310 95, 330 95 Z" fill="url(#body-gradient)" />
+                                </g>
+                                <rect id="svg-rev-band-1" class="resistor-band" x="95" y="25" width="16" height="70" rx="3" fill="#eee" />
+                                <rect id="svg-rev-band-2" class="resistor-band" x="135" y="25" width="16" height="70" rx="3" fill="#eee" />
+                                <rect id="svg-rev-band-3" class="resistor-band" x="175" y="25" width="16" height="70" rx="3" fill="#eee" />
+                                <rect id="svg-rev-band-4" class="resistor-band" x="215" y="25" width="16" height="70" rx="3" fill="#eee" />
+                                <rect id="svg-rev-band-5" class="resistor-band" x="255" y="25" width="16" height="70" rx="3" fill="#eee" />
+                                <rect id="svg-rev-band-6" class="resistor-band" x="295" y="25" width="16" height="70" rx="3" fill="#eee" />
+                            </svg>
+                        </div>
+
+                        <!-- Reverse Results -->
+                        <div class="result-display">
+                            <span class="result-label">Código de Bandas Calculado</span>
+                            <div class="bands-text-list" id="reverse-bands-list">
+                                <!-- Will be filled with colored chips like "Marrón", "Negro", "Rojo"... -->
+                            </div>
+                            <div class="exact-value-match" id="exact-value-feedback">
+                                Valor exacto: 100 k&Omega;
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- PANEL 3: Series / Parallel Calculator -->
+            <section id="panel-circuit" class="tab-panel" role="tabpanel">
+                <div class="panel-layout circuit-layout">
+                    <!-- Resistor Input and List -->
+                    <div class="controls-card grow">
+                        <div class="card-header">
+                            <h3>Red de Resistencias</h3>
+                            <button id="clear-network-btn" class="secondary-btn btn-sm">Limpiar Red</button>
+                        </div>
+                        
+                        <form id="network-add-form" class="network-form" onsubmit="return false;">
+                            <div class="input-unit-group">
+                                <input type="number" id="network-res-val" min="0.001" step="any" placeholder="Valor de resistencia" required>
+                                <select id="network-res-unit">
+                                    <option value="1">&Omega;</option>
+                                    <option value="1000">k&Omega;</option>
+                                    <option value="1000000">M&Omega;</option>
+                                </select>
+                                <button type="submit" id="add-resistor-btn" class="primary-btn">
+                                    <svg viewBox="0 0 24 24" class="btn-icon"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>
+                                    Agregar
+                                </button>
+                            </div>
+                        </form>
+
+                        <div class="resistor-list-wrapper">
+                            <div class="resistor-list-header">
+                                <span>Resistencias en el circuito (<span id="resistor-count">0</span>)</span>
+                            </div>
+                            <ul id="resistor-list" class="resistor-list">
+                                <!-- Dinamically populated with list items -->
+                                <li class="empty-list-msg">No hay resistencias agregadas. Añade algunas para calcular.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Calculated Outputs -->
+                    <div class="results-column">
+                        <!-- Series Card -->
+                        <div class="circuit-result-card series-card">
+                            <div class="card-icon-title">
+                                <div class="circuit-icon-box">
+                                    <!-- Series Resistor Icon -->
+                                    <svg viewBox="0 0 32 32" class="circuit-svg-icon">
+                                        <path d="M 2 16 L 8 16 L 10 12 L 13 20 L 16 12 L 19 20 L 21 16 L 24 16 L 26 12 L 28 20 L 30 16" fill="none" stroke="currentColor" stroke-width="2"/>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h4>Conexión en Serie</h4>
+                                    <p class="circuit-formula">R<sub>eq</sub> = R<sub>1</sub> + R<sub>2</sub> + ... + R<sub>n</sub></p>
+                                </div>
+                            </div>
+                            <div class="circuit-value-display">
+                                <h2 id="series-eq-val">0 &Omega;</h2>
+                            </div>
+                        </div>
+
+                        <!-- Parallel Card -->
+                        <div class="circuit-result-card parallel-card">
+                            <div class="card-icon-title">
+                                <div class="circuit-icon-box">
+                                    <!-- Parallel Resistor Icon -->
+                                    <svg viewBox="0 0 32 32" class="circuit-svg-icon">
+                                        <path d="M 2 16 L 6 16 M 6 6 L 6 26 M 6 6 L 10 6 L 12 2 L 15 10 L 17 2 L 19 10 L 21 6 L 26 6 M 6 26 L 10 26 L 12 22 L 15 30 L 17 22 L 19 30 L 21 26 L 26 26 M 26 6 L 26 26 M 26 16 L 30 16" fill="none" stroke="currentColor" stroke-width="2"/>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h4>Conexión en Paralelo</h4>
+                                    <p class="circuit-formula">1/R<sub>eq</sub> = 1/R<sub>1</sub> + 1/R<sub>2</sub> + ... + 1/R<sub>n</sub></p>
+                                </div>
+                            </div>
+                            <div class="circuit-value-display">
+                                <h2 id="parallel-eq-val">0 &Omega;</h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+        
+        <footer>
+            <p>&copy; 2026 OhmCraft. Diseñado para entusiastas y profesionales del hardware.</p>
+        </footer>
+    </div>
+
+    <!-- App Script -->
+    <script src="app.js"></script>
+</body>
+</html>
