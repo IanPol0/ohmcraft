@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill="none">
+  <defs>
+    <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0ea5e9" />
+      <stop offset="100%" stop-color="#a855f7" />
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="#0ea5e9" flood-opacity="0.3" />
+    </filter>
+  </defs>
+  <!-- Background with dark theme matching app -->
+  <rect width="32" height="32" rx="8" fill="#0b0f19" />
+  <!-- Border outline -->
+  <rect x="0.5" y="0.5" width="31" height="31" rx="7.5" stroke="rgba(255, 255, 255, 0.08)" stroke-width="1" />
+  <!-- Glowing Ohm Symbol -->
+  <path d="M 7 22 H 12 C 12 18, 10.5 13, 16 13 C 21.5 13, 20 18, 20 22 H 25" stroke="url(#grad)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" filter="url(#glow)" />
+</svg>
