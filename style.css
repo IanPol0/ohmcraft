@@ -973,6 +973,38 @@ footer {
 }
 
 @media (max-width: 768px) {
+    html, body {
+        height: auto;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    .app-container {
+        height: auto;
+        min-height: 100vh;
+        overflow: visible;
+        padding: 1rem;
+    }
+
+    .tabs {
+        flex-wrap: wrap;
+        border-radius: 16px;
+        width: 100%;
+        gap: 0.25rem;
+    }
+
+    .tab-btn {
+        flex: 1 1 auto;
+        justify-content: center;
+        padding: 0.5rem 0.75rem;
+        font-size: 0.75rem;
+    }
+
+    .tab-panel {
+        height: auto;
+        overflow: visible;
+    }
+
     .mid-row-layout {
         grid-template-columns: 1fr;
     }
