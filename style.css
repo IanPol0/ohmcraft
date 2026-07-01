@@ -195,6 +195,7 @@ h1 {
     display: none;
     height: 100%;
     overflow-y: auto;
+    overflow-x: hidden;
     padding-right: 4px;
     animation: fade-in 0.4s ease forwards;
 }
@@ -600,6 +601,7 @@ label {
     border-radius: 8px;
     overflow: hidden;
     transition: border-color var(--transition-speed);
+    flex-wrap: wrap;
 }
 
 /* Remove number input spinners for a cleaner look */
@@ -729,6 +731,7 @@ input[type="number"] {
     cursor: pointer;
     font-size: 0.85rem;
     transition: all var(--transition-speed);
+    white-space: nowrap;
 }
 
 .secondary-btn:hover {
@@ -976,6 +979,8 @@ footer {
     gap: 1.5rem;
     margin-bottom: 1.5rem;
     align-items: stretch;
+    max-height: calc(100vh - 200px);
+    overflow-y: auto;
 }
 
 .mid-row-layout .resistor-graphic-container {
@@ -983,6 +988,7 @@ footer {
     display: flex;
     justify-content: center;
     align-items: center;
+    overflow: hidden;
 }
 
 .mid-row-layout .result-display {
@@ -992,6 +998,7 @@ footer {
     justify-content: center;
     align-items: center;
     height: 100%;
+    overflow-y: auto;
 }
 
 @media (max-width: 768px) {
