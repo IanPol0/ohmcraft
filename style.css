@@ -31,7 +31,7 @@
 html,
 body {
     height: 100vh;
-    overflow: hidden;
+
 }
 
 body {
@@ -43,44 +43,6 @@ body {
     position: relative;
 }
 
-/* Background Glowing Orbs */
-.glow-bg {
-    position: absolute;
-    width: 600px;
-    height: 600px;
-    background: radial-gradient(circle, var(--accent-purple-glow) 0%, rgba(11, 15, 25, 0) 70%);
-    top: -10%;
-    left: -10%;
-    z-index: -1;
-    filter: blur(40px);
-    pointer-events: none;
-    animation: floating-glow 20s infinite alternate ease-in-out;
-}
-
-body::after {
-    content: '';
-    position: absolute;
-    width: 500px;
-    height: 500px;
-    background: radial-gradient(circle, var(--accent-blue-glow) 0%, rgba(11, 15, 25, 0) 70%);
-    bottom: -10%;
-    right: -10%;
-    z-index: -1;
-    filter: blur(40px);
-    pointer-events: none;
-    animation: floating-glow 25s infinite alternate-reverse ease-in-out;
-}
-
-@keyframes floating-glow {
-    0% {
-        transform: translate(0, 0) scale(1);
-    }
-
-    100% {
-        transform: translate(80px, 50px) scale(1.1);
-    }
-}
-
 /* App Container */
 .app-container {
     width: 100%;
@@ -90,7 +52,6 @@ body::after {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    overflow: hidden;
 }
 
 /* Header */
@@ -195,7 +156,6 @@ h1 {
     display: none;
     height: 100%;
     overflow-y: auto;
-    overflow-x: hidden;
     padding-right: 4px;
     animation: fade-in 0.4s ease forwards;
 }
@@ -270,7 +230,6 @@ h1 {
     border: 1px solid rgba(255, 255, 255, 0.03);
     margin-bottom: 2rem;
     position: relative;
-    overflow: hidden;
 }
 
 .resistor-graphic-container svg {
@@ -443,7 +402,7 @@ h1 {
     border-radius: 8px;
     border: 1px solid var(--border-color);
     max-width: 100%;
-    overflow: hidden;
+    ;
     text-overflow: ellipsis;
     white-space: nowrap;
 }
@@ -599,7 +558,7 @@ label {
     border: 1px solid var(--border-color);
     background: rgba(0, 0, 0, 0.2);
     border-radius: 8px;
-    overflow: hidden;
+    ;
     transition: border-color var(--transition-speed);
     flex-wrap: wrap;
 }
@@ -776,7 +735,7 @@ input[type="number"] {
     border: 1px solid var(--border-color);
     background: rgba(0, 0, 0, 0.15);
     border-radius: 8px;
-    overflow: hidden;
+    ;
 }
 
 .resistor-list-header {
@@ -988,7 +947,7 @@ footer {
     display: flex;
     justify-content: center;
     align-items: center;
-    overflow: hidden;
+    ;
 }
 
 .mid-row-layout .result-display {
@@ -1016,7 +975,6 @@ footer {
     .app-container {
         height: auto;
         min-height: 100vh;
-        overflow: visible;
         padding: 0.75rem;
     }
 
